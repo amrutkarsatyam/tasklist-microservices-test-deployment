@@ -1,0 +1,29 @@
+services:
+  # The Backend API Service
+  - type: web
+    name: task-api-backend
+    env: docker
+    image:
+      url: satyamamrutkar/task-tracker-backend:latest
+    healthCheck:
+      path: /api/tasks
+    ports:
+      - port: 3000
+    autoDeploy: false # Change to true to auto-deploy on new pushes
+
+  # The Frontend Service
+  - type: web
+    name: task-app-frontend
+    env: docker
+    image:
+      url: satyamamrutkar/task-tracker-frontend:latest
+    ports:
+      - port: 80
+    autoDeploy: false
+    # This is the magic part! We inject the backend's URL into the frontend
+    envVars:
+      - key: RENDER_EXTERNAL_URL
+        # This will create the config.js file on the fly before starting the server
+      - key: DOCKER_CMD
+        value: |
+          echo "window.config = { API_URL: '${task-api-backend.RENDER_EXTERNAL_URL}' }" > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'

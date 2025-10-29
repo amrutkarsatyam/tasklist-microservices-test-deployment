@@ -1,0 +1,50 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f4f7f9;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+    margin: 0;
+}
+
+main {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 2rem;
+}
+
+h1 { text-align: center; color: #333; }
+
+.input-container { display: flex; gap: 10px; margin-bottom: 20px; }
+#task-input { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+#add-task-btn { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+#add-task-btn:hover { background-color: #0056b3; }
+
+#task-list { list-style: none; padding: 0; margin: 0; }
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 5px;
+    border-bottom: 1px solid #eee;
+    word-break: break-all;
+}
+.task-item:last-child { border-bottom: none; }
+
+.task-item.completed span { text-decoration: line-through; color: #999; }
+.task-item input[type="checkbox"] { margin-right: 12px; }
+.task-item .delete-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #ff3b30;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+.task-item:hover .delete-btn { opacity: 1; }

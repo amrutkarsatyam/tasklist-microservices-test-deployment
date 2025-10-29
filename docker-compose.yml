@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # The Frontend Service (Nginx)
+  frontend:
+    build:
+      context: . # Use the Dockerfile in the current directory
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80" # Map host port 8080 to container port 80
+    depends_on:
+      - backend
+
+  # The Backend API Service (Node.js)
+  backend:
+    build:
+      context: ./task-api # Use the Dockerfile in the task-api directory
+    ports:
+      - "3000:3000" # Map host port 3000 to container port 3000
