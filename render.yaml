@@ -5,11 +5,11 @@ services:
     env: docker
     image:
       url: satyamamrutkar/task-tracker-backend:latest
-    healthCheck:
-      path: /api/tasks
-    ports:
-      - port: 3000
-    autoDeploy: false # Change to true to auto-deploy on new pushes
+    # FIX: 'healthCheck' block is replaced with the correct 'healthCheckPath' key.
+    healthCheckPath: /api/tasks
+    # FIX: The 'ports' block is removed. Render automatically uses the port
+    # exposed in your Dockerfile (EXPOSE 3000).
+    autoDeploy: false
 
   # The Frontend Service
   - type: web
@@ -17,13 +17,10 @@ services:
     env: docker
     image:
       url: satyamamrutkar/task-tracker-frontend:latest
-    ports:
-      - port: 80
+    # FIX: The 'ports' block is removed. Render automatically uses the port
+    # exposed by the Nginx image in your Dockerfile (port 80).
     autoDeploy: false
-    # This is the magic part! We inject the backend's URL into the frontend
     envVars:
-      - key: RENDER_EXTERNAL_URL
-        # This will create the config.js file on the fly before starting the server
       - key: DOCKER_CMD
         value: |
           echo "window.config = { API_URL: '${task-api-backend.RENDER_EXTERNAL_URL}' }" > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'
