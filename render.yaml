@@ -4,7 +4,7 @@ services:
     name: task-api-backend
     env: docker
     image:
-      url: satyamamrutkar/task-tracker-backend:latest
+      url: satyamamrutkar/task-full-backend:latest
     # FIX: 'healthCheck' block is replaced with the correct 'healthCheckPath' key.
     healthCheckPath: /api/tasks
     # FIX: The 'ports' block is removed. Render automatically uses the port
@@ -16,7 +16,7 @@ services:
     name: task-app-frontend
     env: docker
     image:
-      url: satyamamrutkar/task-tracker-frontend:latest
+      url: satyamamrutkar/task-full-frontend:latest
     # FIX: The 'ports' block is removed. Render automatically uses the port
     # exposed by the Nginx image in your Dockerfile (port 80).
     autoDeploy: false
