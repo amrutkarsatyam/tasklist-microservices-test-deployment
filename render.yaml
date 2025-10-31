@@ -1,21 +1,29 @@
 services:
-  # The Backend API Service
+  # The Backend API Service (Builds from source)
   - type: web
     name: task-api-backend
-    runtime: image # FIX: Changed 'env: docker' to 'runtime: image'
-    image:
-      url: satyamamrutkar/task-full-backend:latest
+    # Use 'docker' runtime to build from a Dockerfile
+    runtime: docker
+    # Tell Render where your backend code is
+    dockerContext: ./task-api
+    dockerfile: Dockerfile
+    # Health check to make sure it's alive
     healthCheckPath: /api/tasks
     autoDeploy: false
 
-  # The Frontend Service
+  # The Frontend Service (Builds from source)
   - type: web
     name: task-app-frontend
-    runtime: image # FIX: Changed 'env: docker' to 'runtime: image'
-    image:
-      url: satyamamrutkar/task-full-frontend:latest
+    # Use 'docker' runtime to build from a Dockerfile
+    runtime: docker
+    # Tell Render where your frontend code is
+    dockerContext: .
+    dockerfile: Dockerfile
     autoDeploy: false
     envVars:
       - key: DOCKER_CMD
+        # This command dynamically creates config.js at runtime.
+        # It injects the live backend's URL (including /api/tasks)
+        # into the frontend's static files.
         value: |
-          echo "window.config = { API_URL: '${task-api-backend.RENDER_EXTERNAL_URL}' }" > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'
+          echo "window.config = { API_URL: '${task-api-backend.RENDER_EXTERNAL_URL}/api/tasks' }" > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'

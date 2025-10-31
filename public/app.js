@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // The backend API will be running on port 3000
-    const API_URL = 'https://task-tracker-api-vlfx.onrender.com/';
-
+    const API_URL = window.config.API_URL;
     const taskInput = document.getElementById('task-input');
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskList = document.getElementById('task-list');
@@ -55,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addTask = async () => {
         const text = taskInput.value.trim();
         if (text === '') return;
-        
+
         await fetchAPI(API_URL, 'POST', { text });
         taskInput.value = '';
         loadTasks();
