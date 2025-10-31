@@ -2,23 +2,18 @@ services:
   # The Backend API Service
   - type: web
     name: task-api-backend
-    env: docker
+    runtime: image # FIX: Changed 'env: docker' to 'runtime: image'
     image:
       url: satyamamrutkar/task-full-backend:latest
-    # FIX: 'healthCheck' block is replaced with the correct 'healthCheckPath' key.
     healthCheckPath: /api/tasks
-    # FIX: The 'ports' block is removed. Render automatically uses the port
-    # exposed in your Dockerfile (EXPOSE 3000).
     autoDeploy: false
 
   # The Frontend Service
   - type: web
     name: task-app-frontend
-    env: docker
+    runtime: image # FIX: Changed 'env: docker' to 'runtime: image'
     image:
       url: satyamamrutkar/task-full-frontend:latest
-    # FIX: The 'ports' block is removed. Render automatically uses the port
-    # exposed by the Nginx image in your Dockerfile (port 80).
     autoDeploy: false
     envVars:
       - key: DOCKER_CMD
