@@ -15,5 +15,6 @@ services:
   backend:
     build:
       context: ./task-api # Use the Dockerfile in the task-api directory
+      dockerfile: Dockerfile
     ports:
       - "3000:3000" # Map host port 3000 to container port 3000
