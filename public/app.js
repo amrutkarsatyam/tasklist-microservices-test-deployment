@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // The backend API will be running on port 3000
-    const API_URL = config.API_URL + '/api/tasks';
+    const API_URL = 'https://task-tracker-api-vlfx.onrender.com';
 
     const taskInput = document.getElementById('task-input');
     const addTaskBtn = document.getElementById('add-task-btn');
