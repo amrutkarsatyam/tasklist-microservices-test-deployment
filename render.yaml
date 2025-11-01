@@ -3,8 +3,7 @@ services:
   - type: web
     name: task-api-backend
     env: docker
-    dockerfilePath: ./task-api/Dockerfile
-    buildContext: ./task-api
+    dockerfilePath: task-api/Dockerfile
     envVars:
       - key: PORT
         value: 3000
@@ -15,8 +14,7 @@ services:
   - type: web
     name: task-frontend
     env: docker
-    dockerfilePath: ./Dockerfile
-    buildContext: .
+    dockerfilePath: Dockerfile
     envVars:
       - key: PORT
         value: 80
