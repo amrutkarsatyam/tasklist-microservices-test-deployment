@@ -24,7 +24,3 @@ services:
         value: 80
     plan: free
     autoDeploy: false
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /
