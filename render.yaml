@@ -4,8 +4,7 @@ services:
     name: task-api-backend
     env: docker
     dockerfilePath: ./task-api/Dockerfile
-    buildCommand: ""
-    startCommand: ""
+    buildContext: ./task-api
     envVars:
       - key: PORT
         value: 3000
@@ -17,8 +16,7 @@ services:
     name: task-frontend
     env: docker
     dockerfilePath: ./Dockerfile
-    buildCommand: ""
-    startCommand: ""
+    buildContext: .
     envVars:
       - key: PORT
         value: 80
