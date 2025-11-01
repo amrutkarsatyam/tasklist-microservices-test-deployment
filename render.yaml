@@ -1,29 +1,30 @@
 services:
-  # The Backend API Service (Builds from source)
+  # Backend API (Node.js)
   - type: web
     name: task-api-backend
-    # Use 'docker' runtime to build from a Dockerfile
-    runtime: docker
-    # Tell Render where your backend code is
-    dockerContext: ./task-api
-    dockerfile: Dockerfile
-    # Health check to make sure it's alive
-    healthCheckPath: /api/tasks
+    env: docker
+    dockerfilePath: ./task-api/Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    envVars:
+      - key: PORT
+        value: 3000
+    plan: free
     autoDeploy: false
 
-  # The Frontend Service (Builds from source)
+  # Frontend (Nginx serving static files)
   - type: web
-    name: task-app-frontend
-    # Use 'docker' runtime to build from a Dockerfile
-    runtime: docker
-    # Tell Render where your frontend code is
-    dockerContext: .
-    dockerfile: Dockerfile
-    autoDeploy: false
+    name: task-frontend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    buildCommand: ""
+    startCommand: ""
     envVars:
-      - key: DOCKER_CMD
-        # This command dynamically creates config.js at runtime.
-        # It injects the live backend's URL (including /api/tasks)
-        # into the frontend's static files.
-        value: |
-          echo "window.config = { API_URL: '${task-api-backend.RENDER_EXTERNAL_URL}/api/tasks' }" > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'
+      - key: PORT
+        value: 80
+    plan: free
+    autoDeploy: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /
